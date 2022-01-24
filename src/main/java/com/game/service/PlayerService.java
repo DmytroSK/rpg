@@ -1,6 +1,7 @@
 package com.game.service;
 
 import com.game.controller.PlayerFilter;
+import com.game.controller.UpdatePlayerRequest;
 import com.game.entity.Player;
 
 import java.util.List;
@@ -9,18 +10,19 @@ public interface PlayerService {
 
     List<Player> getAllPlayers();
 
-    void savePlayer(Player player);
+    Player savePlayer(Player player);
 
     Player getPlayer(long id);
 
     void deletePlayer(long id);
 
-//    void updatePlayer(long id);
+    Player updatePlayer(long id, UpdatePlayerRequest updatePlayerRequest);
 
     void validate(Player player);
 
-    long playersCount();
+    long playersCount(PlayerFilter filter);
 
+    List<Player> filterPlayers(PlayerFilter filter);
 
 
 //    List<Player> filterPlayers(PlayerFilter filter);

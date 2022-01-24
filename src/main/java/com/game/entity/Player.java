@@ -1,7 +1,7 @@
 package com.game.entity;
 
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "player")
@@ -36,7 +36,7 @@ public class Player {
 
     //конструктор без указанного параметра banned
 
-    public Player(Long id, String name, String title, Race race, Profession profession, Date birthday
+/*    public Player(Long id, String name, String title, Race race, Profession profession, Date birthday
             , Boolean banned, Integer experience, Integer level, Integer untilNextLevel) {
         this.id = id;
         this.name = name;
@@ -46,9 +46,9 @@ public class Player {
         this.birthday = birthday;
         this.banned = banned;
         this.experience = experience;
-        this.level = currentCharacterLevel(experience);;
-        this.untilNextLevel = experienceNextLevel(currentCharacterLevel(experience),experience);;
-    }
+        this.level = currentCharacterLevel(experience);
+        this.untilNextLevel = experienceNextLevel(currentCharacterLevel(experience),experience);
+    }*/
 
     public Long getId() {
         return id;
@@ -96,6 +96,8 @@ public class Player {
 
     public void setExperience(Integer experience) {
         this.experience = experience;
+        level = currentCharacterLevel();
+        untilNextLevel = experienceNextLevel();
     }
 
     public Integer getLevel() {
@@ -103,15 +105,7 @@ public class Player {
     }
 
     public void setLevel(Integer level) {
-        this.level = currentCharacterLevel(experience);
-    }
-
-    public Integer getUntilNextLevel() {
-        return untilNextLevel;
-    }
-
-    public void setUntilNextLevel(Integer untilNextLevel) {
-        this.untilNextLevel = experienceNextLevel(currentCharacterLevel(experience),experience);
+        this.level = level;
     }
 
     public Date getBirthday() {
@@ -130,18 +124,25 @@ public class Player {
         this.banned = banned;
     }
 
-    private Integer currentCharacterLevel(Integer experience){
+    public Integer getUntilNextLevel() {
+        return untilNextLevel;
+    }
+
+    public void setUntilNextLevel(Integer untilNextLevel) {
+        this.untilNextLevel = untilNextLevel;
+    }
+
+    private Integer currentCharacterLevel() {
         Double squareRoot = Double.valueOf(2500 + 200 * experience);
         Integer square = (int) Math.round(Math.sqrt(squareRoot));
-        Integer result =  (square - 50) /100;
+        Integer result = (square - 50) / 100;
         return result;
     }
 
-    private Integer experienceNextLevel (Integer level, Integer experience){
-        Integer result = 50 * (level + 1) + (level + 2) - experience;
+    private Integer experienceNextLevel() {
+        Integer result = 50 * (level + 1) * (level + 2) - experience;
         return result;
     }
-
 
 
 }
